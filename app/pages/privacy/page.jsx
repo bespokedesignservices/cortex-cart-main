@@ -34,7 +34,7 @@ export default function TermsPage() {
                         
                         <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">4. Your Data Rights</h2>
                         <p className="mt-6">
-                            You have the right to access, update, or delete your personal information at any time. You can manage your site settings from the settings page. You can also delete your entire account and all associated data from the {"Danger Zone"}in your settings, which is an irreversible action.
+                            You have the right to access, update, or delete your personal information at any time. You can manage your site settings from the settings page. You can also delete your entire account and all associated data from the &quot;Danger Zone&quot;in your settings, which is an irreversible action.
                         </p> 
 
                         <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Contact Us</h2>
