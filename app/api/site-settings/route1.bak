@@ -1,0 +1,65 @@
+// The new, refactored version of src/app/api/site-settings/route.js
+
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { db } from '@/lib/db';
+
+export async function GET() {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    try {
+        const siteSettings = await db.sites.findFirst({
+            where: {
+                user_id: session.user.id,
+            },
+            select: {
+                site_name: true,
+                site_url: true,
+                currency: true,
+            },
+        });
+
+        if (!siteSettings) {
+            return NextResponse.json({}, { status: 200 });
+        }
+
+        return NextResponse.json(siteSettings, { status: 200 });
+    } catch (error) {
+        console.error("Error fetching site settings:", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
+
+export async function POST(req) {
+    const session = await getServerSession(authOptions);
+        console.log("Inspecting session in GET route:", JSON.stringify(session, null, 2));
+
+    if (!session) {
+        return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    try {
+        const { siteName, siteUrl, currency } = await req.json();
+
+        // THE FIX: Use the unique user_id to find and update the correct site record.
+        await db.sites.update({
+            where: {
+                user_id: session.user.id, // Prisma requires a unique field here.
+            },
+            data: {
+                site_name: siteName,
+                site_url: siteUrl,
+                currency: currency,
+            },
+        });
+
+        return new NextResponse("Settings updated successfully", { status: 200 });
+    } catch (error) {
+        console.error("Error updating site settings:", error);
+        return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}

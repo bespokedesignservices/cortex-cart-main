@@ -17,7 +17,7 @@ async function getPageData() {
         const [content, blogPosts, plans] = await Promise.all([
             getHomepageContent(),
             getRecentBlogPosts(),
-            getSubscriptionPlans()
+            getSubscriptionPlans(),
         ]);
 
         return {
