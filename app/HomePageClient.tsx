@@ -252,17 +252,17 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                 <div className="flex animate-scroll-left whitespace-nowrap py-4">
                     {/* Duplicate content to ensure seamless loop */}
                     {[...Array(2)].map((_, i) => (
-                        <div key={i} className="flex items-center justify-around flex-shrink-0 w-full md:w-auto px-8 space-x-12">
-                 <Image src={"/logos/mailchimplogo.png"} width={100} height={100} alt={'Mailchimp Logo'}></Image>                    
-                <Image src={"/logos/quickbooklogo.png"} width={100} height={100} alt={'Quickbooks Logo'}></Image>                    
-                <Image src={"/logos/shopifylogo.png"} width={100} height={100} alt={'Shopify Logo'}></Image>                    
-                <Image src={"/logos/facebooklogo.png"} width={100} height={100} alt={'Facebook Logo'}></Image>                    
-                <Image src={"/logos/instagramlogo.png"} width={100} height={100} alt={'Instagram Logo'}></Image>                    
-                <Image src={"/logos/xlogo.png"} width={100} height={100} alt={'X Logo'}></Image>                    
-                <Image src={"/logos/pintrestlogo.png"} width={100} height={100} alt={'Pinterest Logo'}></Image>                    
-               <Image src={"/logos/bigcommercelogo.png"} width={100} height={100} alt={'Pinterest Logo'}></Image>                    
-               <Image src={"/logos/magentologo.png"} width={100} height={100} alt={'Pinterest Logo'}></Image>                    
-               <Image src={"/logos/opencartlogo.png"} width={100} height={100} alt={'Pinterest Logo'}></Image>                    
+                        <div key={i} className="flex items-center justify-around flex-shrink-0 w-full md:w-auto px-8 space-x-12"> 
+                 <Image src="/logos/mailchimplogo.png" width={100} height={100} alt={'Mailchimp Logo'}></Image>                    
+                <Image src="/logos/quickbooklogo.png" width={100} height={100} alt={'Quickbooks Logo'}></Image>                    
+                <Image src="/logos/shopifylogo.png" width={100} height={100} alt={'Shopify Logo'}></Image>                    
+                <Image src="/logos/facebooklogo.png" width={100} height={100} alt={'Facebook Logo'}></Image>                    
+                <Image src="/logos/instagramlogo.png" width={100} height={100} alt={'Instagram Logo'}></Image>                    
+                <Image src="/logos/xlogo.png" width={100} height={100} alt={'X Logo'}></Image>                    
+                <Image src="/logos/pintrestlogo.png" width={100} height={100} alt={'Pinterest Logo'}></Image>                    
+               <Image src="/logos/bigcommercelogo.png" width={100} height={100} alt={'Bigcommerce Logo'}></Image>                    
+               <Image src="/logos/magentologo.png" width={100} height={100} alt={'Magento Logo'}></Image>                    
+               <Image src="/logos/opencartlogo.png" width={100} height={100} alt={'Opencart Logo'}></Image>                    
 
                                             </div>
                     ))}
