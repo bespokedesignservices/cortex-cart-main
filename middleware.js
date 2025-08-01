@@ -1,50 +1,56 @@
-// In cortex-cart-main/src/middleware.js
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
+// This function now correctly gets the ADMIN secret key.
 const getSecret = () => {
-    const secret = process.env.NEXTAUTH_SECRET;
+    // This now matches the rest of the application.
+    const secret = process.env.JWT_ADMIN_SECRET;
     if (!secret) {
-        throw new Error('Missing NEXTAUTH_SECRET environment variable');
+        throw new Error('The JWT_ADMIN_SECRET environment variable is not set.');
     }
     return new TextEncoder().encode(secret);
 };
 
 export async function middleware(req) {
     const { pathname } = req.nextUrl;
-    const secret = getSecret();
-    const appUrl = process.env.NEXTAUTH_URL; // This should be https://cortexcart.com
-
-    // This middleware ONLY protects the /admin routes
+    
+    // This middleware only protects routes starting with /admin
     if (pathname.startsWith('/admin')) {
+        // Allow requests to the login page to pass through
         if (pathname.startsWith('/admin/login')) {
             return NextResponse.next();
         }
 
-        const adminCookie = req.cookies.get('admin-session-token');
-        const adminToken = adminCookie?.value;
+        const adminToken = req.cookies.get('admin-session-token')?.value;
 
+        // If there is no token, redirect to the login page.
         if (!adminToken) {
-            return NextResponse.redirect(new URL('/admin/login', appUrl));
+            return NextResponse.redirect(new URL('/admin/login', req.url));
         }
 
         try {
+            const secret = getSecret();
+            // Verify the token is valid and signed with the correct secret.
             const { payload } = await jwtVerify(adminToken, secret);
+            
+            // Ensure the user has the correct role.
             if (payload.role !== 'superadmin') {
-                return NextResponse.redirect(new URL('/admin/login?error=Forbidden', appUrl));
+                throw new Error('Forbidden');
             }
+            
+            // If verification is successful, allow the request to proceed.
             return NextResponse.next();
         } catch (error) {
-            console.error('Admin token verification failed:', error);
-            return NextResponse.redirect(new URL('/admin/login', appUrl));
+            console.error('Admin authentication failed:', error.message);
+            // If verification fails for any reason, redirect to the login page.
+            return NextResponse.redirect(new URL('/admin/login', req.url));
         }
     }
 
-    // For all other routes, do nothing.
     return NextResponse.next();
 }
 
 export const config = {
-    // Only run this middleware on admin routes
+    // This specifies that the middleware should run on all admin routes.
     matcher: ['/admin/:path*'],
 };

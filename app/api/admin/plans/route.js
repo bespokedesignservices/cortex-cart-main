@@ -1,4 +1,4 @@
-// src/app/api/admin/plans/route.js
+// app/api/admin/plans/route.js
 import { verifyAdminSession } from '@/lib/admin-auth';
 import { db } from '@/lib/db'; 
 import { NextResponse } from 'next/server';

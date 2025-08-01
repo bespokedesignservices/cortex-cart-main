@@ -1,85 +1,62 @@
-// src/app/api/admin/roadmap/[id]/route.js (Corrected)
-
-import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { jwtVerify } from 'jose';
+import { NextResponse } from 'next/server';
+import { verifyAdminSession } from '@/lib/admin-auth';
 
-// Helper function to get the secret key
-const getSecret = () => {
-    const secret = process.env.JWT_ADMIN_SECRET;
-    if (!secret) {
-        throw new Error("JWT_ADMIN_SECRET is not set.");
-    }
-    return new TextEncoder().encode(secret);
-};
-
-// Middleware to verify admin token for both PUT and DELETE
-async function verifyAdmin(req) {
-    const adminCookie = req.cookies.get('admin-session-token');
-    const token = adminCookie?.value;
-
-    if (!token) {
-        return { error: new NextResponse("Forbidden: No session token found.", { status: 403 }) };
-    }
-    
-    try {
-        const secret = getSecret();
-        const { payload } = await jwtVerify(token, secret);
-        if (payload.role !== 'superadmin') {
-            return { error: new NextResponse("Forbidden: You do not have permission.", { status: 403 }) };
-        }
-        return { payload }; // Success
-    } catch { // THE FIX: 'err' has been removed from here
-        return { error: new NextResponse("Unauthorized: Invalid session token.", { status: 401 }) };
-    }
-}
-
-// --- PUT: Update an existing roadmap item ---
+// Handles updating a specific roadmap feature
 export async function PUT(req, { params }) {
-    const auth = await verifyAdmin(req);
-    if (auth.error) return auth.error;
+    const session = await verifyAdminSession();
+    if (!session) {
+        return new NextResponse(JSON.stringify({ message: "Not Authenticated" }), { status: 401 });
+    }
 
     try {
-        const { id } = params;
+        const { id } = params; // Correctly access the ID from params
         const body = await req.json();
-        const { title, description, category, status, releaseDate } = body;
+        const { name, description, status } = body;
 
-        const updatedItem = await db.roadmap.update({
-            where: { id: parseInt(id, 10) },
-            data: {
-                title,
-                description,
-                category,
-                status,
-                release_date: releaseDate ? new Date(releaseDate) : null,
-            },
-        });
+        if (!name || !description || !status) {
+            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        }
 
-        return NextResponse.json(updatedItem, { status: 200 });
+        // Use a direct SQL UPDATE query
+        const [result] = await db.query(
+            'UPDATE roadmap_features SET name = ?, description = ?, status = ? WHERE id = ?',
+            [name, description, status, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return NextResponse.json({ message: 'Roadmap feature not found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: 'Feature updated successfully' }, { status: 200 });
 
     } catch (error) {
         console.error('[ROADMAP_PUT_ERROR]', error);
-        return new NextResponse("Internal Server Error", { status: 500 });
+        return new NextResponse(JSON.stringify({ message: "Internal Server Error" }), { status: 500 });
     }
 }
 
-
-// --- DELETE: Remove a roadmap item ---
+// Handles deleting a specific roadmap feature
 export async function DELETE(req, { params }) {
-    const auth = await verifyAdmin(req);
-    if (auth.error) return auth.error;
+    const session = await verifyAdminSession();
+    if (!session) {
+        return new NextResponse(JSON.stringify({ message: "Not Authenticated" }), { status: 401 });
+    }
 
     try {
-        const { id } = params;
+        const { id } = params; // Correctly access the ID
 
-        await db.roadmap.delete({
-            where: { id: parseInt(id, 10) },
-        });
+        // Use a direct SQL DELETE query
+        const [result] = await db.query('DELETE FROM roadmap_features WHERE id = ?', [id]);
 
-        return new NextResponse(null, { status: 204 }); // 204 No Content is standard for a successful delete
+        if (result.affectedRows === 0) {
+            return NextResponse.json({ message: 'Roadmap feature not found' }, { status: 404 });
+        }
+
+        return new NextResponse(null, { status: 204 }); // Success, no content
 
     } catch (error) {
         console.error('[ROADMAP_DELETE_ERROR]', error);
-        return new NextResponse("Internal Server Error", { status: 500 });
+        return new NextResponse(JSON.stringify({ message: "Internal Server Error" }), { status: 500 });
     }
 }

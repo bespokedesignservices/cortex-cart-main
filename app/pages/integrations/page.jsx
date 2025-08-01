@@ -1,7 +1,7 @@
 // app/integrations/page.jsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import MainLayout from '@/app/components/MainLayout';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -103,7 +103,7 @@ const screenshots = [
 ];
 
 export default function IntegrationsPage() {
-    const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
+
 
     useEffect(() => {
         const interval = setInterval(() => {

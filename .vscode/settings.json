@@ -3,5 +3,21 @@
         "revealOn": "run",
         "revealWithFocus": "test-results",
         "clearOnRun": "none"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "admin_cortexcart",
+            "database": "admin_cortexcart",
+            "username": "root",
+            "askForPassword": true
+        }
+    ]
 }

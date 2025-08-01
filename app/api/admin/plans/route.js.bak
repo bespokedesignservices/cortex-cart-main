@@ -1,7 +1,7 @@
-// src/app/api/admin/plans/route.js
+// app/api/admin/plans/route.js
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'; // Corrected import
-import db from '../../../../../src/lib/db';
+import db from '../../../../../lib/db';
 import { NextResponse } from 'next/server';
 
 // GET handler to fetch all subscription plans

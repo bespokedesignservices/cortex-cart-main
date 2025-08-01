@@ -1,51 +1,49 @@
-import { verifyAdminSession } from '@/lib/admin-auth';
-import { db } from '@/lib/db'; 
+import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
+import { verifyAdminSession } from '@/lib/admin-auth';
 
-// GET handler to fetch all CMS content
+// This handles fetching all CMS content as key-value pairs.
 export async function GET() {
-   const adminSession = await verifyAdminSession();
-    if (!adminSession) {
-        return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
-    }
-
     try {
-        const [rows] = await db.query('SELECT content_key, content_value FROM cms_content');
-        // Convert the array of objects to a single key-value object
-        const content = rows.reduce((acc, row) => {
+        // This now uses the correct column names: content_key and content_value
+        const [rows] = await db.query('SELECT `content_key`, `content_value` FROM cms_content');
+
+        // Convert the array of {key, value} objects into a single object
+        const contentObject = rows.reduce((acc, row) => {
             acc[row.content_key] = row.content_value;
             return acc;
         }, {});
-        return NextResponse.json(content, { status: 200 });
+
+        return NextResponse.json(contentObject);
     } catch (error) {
-        console.error('Error fetching CMS content:', error);
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+        console.error('[CMS_GET_ERROR]', error);
+        return new NextResponse(JSON.stringify({ message: "Internal Server Error" }), { status: 500 });
     }
 }
 
-// POST handler to update a specific piece of CMS content
-export async function POST(request) {
-    const session = await getServerSession(authOptions);
-    if (session?.user?.role !== 'superadmin') {
-        return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+// This handles updating a single piece of content using its key.
+export async function POST(req) {
+    const session = await verifyAdminSession();
+    if (!session) {
+        return new NextResponse(JSON.stringify({ message: "Not Authenticated" }), { status: 401 });
     }
 
     try {
-        const { key, value } = await request.json();
-        if (!key || value === undefined) {
-            return NextResponse.json({ message: 'Key and value are required' }, { status: 400 });
+        const { key, value } = await req.json();
+
+        if (!key) {
+            return NextResponse.json({ message: '"key" is a required field' }, { status: 400 });
         }
 
-        const query = `
-            INSERT INTO cms_content (content_key, content_value)
-            VALUES (?, ?)
-            ON DUPLICATE KEY UPDATE content_value = VALUES(content_value);
-        `;
-        await db.query(query, [key, value]);
-        
+        // This SQL command now uses the correct column names and will update a row
+        // if the key exists, or insert a new one if it doesn't.
+        const query = 'INSERT INTO cms_content (`content_key`, `content_value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `content_value` = ?';
+        await db.query(query, [key, value, value]);
+
         return NextResponse.json({ message: 'Content updated successfully' }, { status: 200 });
+
     } catch (error) {
-        console.error('Error updating CMS content:', error);
-        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+        console.error('[CMS_POST_ERROR]', error);
+        return new NextResponse(JSON.stringify({ message: "Internal Server Error" }), { status: 500 });
     }
 }
