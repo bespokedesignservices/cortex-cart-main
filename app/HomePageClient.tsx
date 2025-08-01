@@ -149,6 +149,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                       />
                     </Link>                   
                     <ul className="flex items-center space-x-6">
+                        <li><Link href="pages/integrations"><span className="hover:text-blue-600 cursor-pointer">Integrations</span></Link></li>
                         <li><a href="#features" className="hover:text-blue-600">Features</a></li>
                         <li><a href="#pricing" className="hover:text-blue-600">Pricing</a></li>
                         <li>
@@ -157,7 +158,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                             </Link>
                         </li>
                         <li>
-                            <Link href={`${trackerUrl}/dashboard`}>
+                            <Link href="https://tracker.cortexcart.com/dashboard">
                                 <div className="px-6 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors cursor-pointer">
                                     Start Free Trial
                                 </div>
@@ -176,7 +177,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                         {content?.hero_subtitle || 'Stop guessing. Start growing. CortexCart gives you the actionable insights you need to boost sales.'}
                     </p>
                     <div className="mt-8">
-                        <Link href={`${trackerUrl}/dashboard`}>
+                        <Link href="https://tracker.cortexcart.com//dashboard">
                            <div className="inline-flex items-center px-8 py-4 text-lg font-semibold text-bluw-700 bg-gray-100 rounded-full hover:bg-blue-700 transition-transform transform hover:scale-105 cursor-pointer">
                                 Get Started for Free <ArrowRightIcon className="h-5 w-5 ml-2" />
                             </div>
@@ -357,13 +358,13 @@ const PricingCard = ({ plan }: { plan: Plan }) => {
             </ul>
             <div className="mt-8">
                  {isCustom ? (
-                     <Link href={`${trackerUrl}/contact`}>
+                     <Link href="/pages/contact">
                         <div className={`w-full text-center px-6 py-3 font-semibold rounded-lg transition-colors text-white bg-gray-700 hover:bg-gray-800 cursor-pointer`}>
                             Contact Us
                         </div>
                     </Link>
                  ) : (
-                    <Link href={`${trackerUrl}/dashboard`}>
+                    <Link href="https://tracker.cortexcart.com/dashboard">
                         <div className={`w-full text-center px-6 py-3 font-semibold rounded-lg transition-colors ${plan.is_popular ? 'text-white bg-blue-600 hover:bg-blue-700' : 'text-blue-600 bg-blue-100 hover:bg-blue-200'} cursor-pointer`}>
                             Start 14-Day Free Trial
                         </div>

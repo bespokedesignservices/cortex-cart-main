@@ -17,15 +17,16 @@ const TopNav = () => {
                       />
                     </Link>                   
                     <ul className="flex items-center space-x-6">
-                        <li><a href="#features" className="hover:text-blue-600">Features</a></li>
-                        <li><a href="#pricing" className="hover:text-blue-600">Pricing</a></li>
+                        <li><Link href="pages/integrations"><span className="hover:text-blue-600 cursor-pointer">Integrations</span></Link></li>
+                        <li><Link href="/#features"><span className="hover:text-blue-600 cursor-pointer">Features</span></Link></li>
+                        <li><Link href="/#pricing"><span className="hover:text-blue-600 cursor-pointer">Pricing</span></Link></li>
                         <li>
                             <Link href="/blog">
                                 <span className="hover:text-blue-600 cursor-pointer">Blog</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/dashboard`">
+                            <Link href="https://tracker.cortexcart.com/dashboard">
                                 <div className="px-6 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors cursor-pointer">
                                     Start Free Trial
                                 </div>
