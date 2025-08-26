@@ -6,7 +6,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  // ... your metadata
+  other: {
+    'facebook-domain-verification': '5jg6zgmfosj3k53rwsnzq13d3cvj4n',
+  },
 };
 
 export default function RootLayout({
