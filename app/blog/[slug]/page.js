@@ -3,7 +3,7 @@ import BlogPostLayout from "@/app/components/BlogPostLayout"; // Assuming this i
 import { db } from "@/lib/db";
 
 // This async function now correctly gets the slug from params
-async function getPost(slug) {
+async function getPost(slug) { // No change needed here, slug is already a direct parameter
     let connection;
     try {
         connection = await db.getConnection();
@@ -18,14 +18,13 @@ async function getPost(slug) {
         if (mainPostRows.length === 0) return null;
 
         const sidebarPostsQuery = `
-            SELECT title, slug, published_at FROM blog_posts
+            SELECT id, title, slug, published_at, featured_image_url, author_name FROM blog_posts
             WHERE status = 'published' AND published_at <= NOW() AND slug != ?
             ORDER BY published_at DESC LIMIT 5
         `;
         const [sidebarPosts] = await connection.query(sidebarPostsQuery, [slug]);
 
         return { mainPost: mainPostRows[0], sidebarPosts };
-
     } catch (error) {
         console.error("Error fetching post data:", error);
         return null;
@@ -60,5 +59,5 @@ export default async function BlogPostPage({ params }) {
         return <div>Post not found.</div>;
     }
 
-    return <BlogPostLayout post={data.mainPost} sidebarPosts={data.sidebarPosts} />;
+    return <BlogPostLayout post={data.mainPost} sidebarPosts={data.sidebarPosts} key={data.mainPost.slug} />;
 }

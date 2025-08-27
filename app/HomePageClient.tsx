@@ -158,7 +158,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                             </Link>
                         </li>
                         <li>
-                            <Link href="https://tracker.cortexcart.com/dashboard">
+                            <Link href="https://tracker.cortexcart.com/login">
                                 <div className="px-6 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors cursor-pointer">
                                     Start Free Trial
                                 </div>
@@ -177,7 +177,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                         {content?.hero_subtitle || 'Stop guessing. Start growing. CortexCart gives you the actionable insights you need to boost sales.'}
                     </p>
                     <div className="mt-8">
-                        <Link href="https://tracker.cortexcart.com//dashboard">
+                        <Link href="https://tracker.cortexcart.com/login">
                            <div className="inline-flex items-center px-8 py-4 text-lg font-semibold text-bluw-700 bg-gray-100 rounded-full hover:bg-blue-700 transition-transform transform hover:scale-105 cursor-pointer">
                                 Get Started for Free <ArrowRightIcon className="h-5 w-5 ml-2" />
                             </div>
@@ -312,7 +312,7 @@ export default function HomePageClient({ content, plans, recentPost }: HomePageC
                             </a>
                         ))}
                     </div>
-                                       <p className="mt-4">&copy; {new Date().getFullYear()} CortexCart. All rights reserved.</p>
+                                       <p className="mt-4">&copy; {new Date().getFullYear()} Cortexcart LIMITED Company Number: NI732656. All rights reserved.</p>
 
                 </div>
             </footer>
@@ -364,7 +364,7 @@ const PricingCard = ({ plan }: { plan: Plan }) => {
                         </div>
                     </Link>
                  ) : (
-                    <Link href="https://tracker.cortexcart.com/dashboard">
+                    <Link href="https://tracker.cortexcart.com/login">
                         <div className={`w-full text-center px-6 py-3 font-semibold rounded-lg transition-colors ${plan.is_popular ? 'text-white bg-blue-600 hover:bg-blue-700' : 'text-blue-600 bg-blue-100 hover:bg-blue-200'} cursor-pointer`}>
                             Start 14-Day Free Trial
                         </div>
