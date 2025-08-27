@@ -78,7 +78,7 @@ const FooterBase = () => {
                         ))}
                     </div>
                     
-                    <p className="mt-4">&copy; {new Date().getFullYear()} CortexCart. All rights reserved.</p>
+                    <p className="mt-4">&copy; {new Date().getFullYear()} CortexCart LIMITED Company Number: NI732656. All rights reserved.</p>
 
                 </div>
 
