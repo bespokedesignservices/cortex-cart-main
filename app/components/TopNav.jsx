@@ -17,7 +17,7 @@ const TopNav = () => {
                       />
                     </Link>                   
                     <ul className="flex items-center space-x-6">
-                        <li><Link href="/#integrations"><span className="hover:text-blue-600 cursor-pointer">Integrations</span></Link></li>
+                        <li><Link href="https://cortexcart.com/pages/integrations"><span className="hover:text-blue-600 cursor-pointer">Integrations</span></Link></li>
                         <li><Link href="/#features"><span className="hover:text-blue-600 cursor-pointer">Features</span></Link></li>
                         <li><Link href="/#pricing"><span className="hover:text-blue-600 cursor-pointer">Pricing</span></Link></li>
                         <li>
