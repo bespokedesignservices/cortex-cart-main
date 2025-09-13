@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         
         <p><strong>Last updated:</strong> September 12, 2025</p>
 
-        <p>Your privacy is important to us. It is CortexCart's policy to respect your privacy regarding any information we may collect from you across our website and services.</p>
+        <p>Your privacy is important to us. It is CortexCart&apos;s policy to respect your privacy regarding any information we may collect from you across our website and services.</p>
 
         <h2>1. Information We Collect & How We Use It</h2>
         <ul>
@@ -27,14 +27,14 @@ export default function PrivacyPage() {
             <li><strong>To Provide the Service:</strong> The data and analytics collected from your website are displayed back to you within your private dashboard. We do not share this data with any other party.</li>
             <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our service, such as cloud hosting providers or payment processors. These parties are bound by confidentiality agreements and are only permitted to use the information to perform the services we have requested.</li>
             <li><strong>Legal Requirements:</strong> We will disclose your information where required to do so by law or subpoena or if we reasonably believe that such action is necessary to comply with the law and the reasonable requests of law enforcement.</li>
-            <li><strong>Google User Data:</strong> Specifically, user data obtained from Google's authentication services (such as your name and email) is used only for authentication and account management within CortexCart. <strong>This data is not shared, transferred, or disclosed to any third party</strong>, except as necessary to comply with applicable law or as part of a security investigation.</li>
+            <li><strong>Google User Data:</strong> Specifically, user data obtained from Google&apos;s authentication services (such as your name and email) is used only for authentication and account management within CortexCart. <strong>This data is not shared, transferred, or disclosed to any third party</strong>, except as necessary to comply with applicable law or as part of a security investigation.</li>
         </ul>
 
         <h2>3. Data Security</h2>
         <p>We take data security seriously. We use a combination of technical, administrative, and physical controls to maintain the security of your data. Sensitive information, such as social media credentials, is encrypted using industry-standard algorithms before being stored in our database.</p>
 
         <h2>4. Your Data Rights</h2>
-        <p>You have the right to access, update, or delete your personal information at any time. You can manage your site settings from the settings page. You can also delete your entire account and all associated data from the "Danger Zone" in your settings, which is an irreversible action.</p>
+        <p>You have the right to access, update, or delete your personal information at any time. You can manage your site settings from the settings page. You can also delete your entire account and all associated data from the &quot;Danger Zone&quot; in your settings, which is an irreversible action.</p>
 
         <h2>Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@cortexcart.com">privacy@cortexcart.com</a>.</p>
