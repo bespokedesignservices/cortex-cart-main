@@ -1,6 +1,6 @@
 
 import MainLayout from '@/app/components/MainLayout';
-export default function TermsPage() {
+export default function PrivacyPage() {
 
     return (
        <MainLayout>
